@@ -7,6 +7,12 @@ name = "b2textify"
 version = "0.1.0"
 description = "把 B 站视频与知乎回答取成纯文本（字幕优先，缺字幕时本地转写，可另出中文译文）"
 readme = "README.md"
+license = { text = "MIT" }
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
 requires-python = ">=3.11"
 # 取文本路径**零第三方依赖**：urllib 够用。ASR 与音频下载才是可选重依赖。
 dependencies = []
