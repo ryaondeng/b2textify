@@ -1,0 +1,31 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "b2textify"
+version = "0.1.0"
+description = "把 B 站视频与知乎回答取成纯文本（字幕优先，缺字幕时本地转写，可另出中文译文）"
+readme = "README.md"
+requires-python = ">=3.11"
+# 取文本路径**零第三方依赖**：urllib 够用。ASR 与音频下载才是可选重依赖。
+dependencies = []
+
+[project.optional-dependencies]
+asr = [
+  "faster-whisper>=1.0",
+  "yt-dlp>=2024.1",
+  "onnxruntime>=1.16",   # Silero VAD：不开 VAD 会幻觉出训练语料里的口播结尾
+]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+b2textify = "b2textify.cli:main"
+# 译文是**提取之后的独立入口**：吃已产出的 md，不碰取数链路（见 src/b2textify/translate.py）
+b2textify-translate = "b2textify.translate:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/b2textify"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
